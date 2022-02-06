@@ -4,10 +4,10 @@ import {
   Route,
 } from 'react-router-dom';
 
-import Body from "./components/Body";
-import Welcome from "./view/Welcome";
-import Leaderboard from "./view/Leaderboard";
-import Breakout from "./view/Breakout";
+import Body from "./components/layout/Body";
+import Welcome from "./views/Welcome";
+import Leaderboard from "./views/Leaderboard";
+import Breakout from "./views/Leaderboard";
 
 function App() {
   return (

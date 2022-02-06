@@ -1,0 +1,19 @@
+.main {
+    align-self: center;
+    width: 75%;
+    max-width: 900px;
+    margin: 5% 5% auto;
+    flex-direction: row;
+    background-color: white;
+    padding: 20px;
+    /*border:5px solid black;*/
+    border-radius: 10px;
+    opacity: .95;
+    flex: 1;
+}
+
+.main article {
+    margin: 20px;
+    width: auto;
+    height: min-content;
+}

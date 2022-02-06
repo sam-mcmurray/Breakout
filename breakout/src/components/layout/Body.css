@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Luxurious+Roman&family=Sigmar+One&display=swap');
+
+.body {
+    margin: 0;
+    background-color: rgb(18, 58, 105);
+    background-image: url('/src/images/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+    font-family: 'Luxurious Roman', sans-serif;
+    line-height: 130%;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}

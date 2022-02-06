@@ -1,0 +1,52 @@
+.header {
+    font-family: 'Sigmar One', sans-serif;
+    background-color: #a50a76;
+    flex-direction: row;
+    padding: 5px;
+    margin-bottom: 0.5%;
+
+}
+
+.logo {
+    font-family: 'Sigmar One', sans-serif;
+    align-self: center;
+    padding-right: 20px;
+    font-weight: normal;
+    color: #309c9c;
+    font-size: 39px;
+    margin: 0 0 10px;
+    flex-direction: row;
+}
+
+.ul {
+    list-style: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    align-self: center;
+}
+
+.link a {
+    list-style: none;
+    align-self: center;
+    color: white;
+    padding: 0 10px;
+    text-decoration: none;
+}
+
+.link a:hover,
+.link a:active,
+.link a.active {
+    padding: 10px;
+    background: #309c9c;
+    border-radius: 10px;
+    color: black;
+}
+
+@media (min-width: 768px) {
+    .header {
+        justify-content: space-between;
+    }
+}
