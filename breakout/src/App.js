@@ -7,7 +7,7 @@ import {
 import Body from "./components/layout/Body";
 import Welcome from "./views/Welcome";
 import Leaderboard from "./views/Leaderboard";
-import Breakout from "./views/Leaderboard";
+import Breakout from "./views/Breakout";
 
 function App() {
   return (
