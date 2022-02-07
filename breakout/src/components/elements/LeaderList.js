@@ -13,11 +13,12 @@ function LeaderList(props) {
   }
 
   return (
-    <ul>
+    <ul className="leader_list">
       {props.items.map((hiScore) => (
-        <LeaderItem
+        <LeaderItem className="leader_list"
           key={hiScore.rank}
           id={hiScore.id}
+          rank={hiScore.rank}
           name={hiScore.name}
           level={hiScore.level}
           score={hiScore.score}

@@ -1,3 +1,19 @@
-.place-item__content {
-    padding: 0;
+.leader-item__content {
+    padding: 10px;
+    width: auto;
+}
+
+.h1 {
+    text-align: center;
+    font-family: "Sigmar One";
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+@media (max-width:600px){
+  .leader-item__content { 
+      grid-template-columns: repeat(1, 1fr); 
+    }
 }

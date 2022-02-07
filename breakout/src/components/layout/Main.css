@@ -1,10 +1,11 @@
 .main {
     align-self: center;
     width: 75%;
+    display: flexbox;
     max-width: 900px;
-    margin: 5% 5% auto;
+    margin: 2% 2% auto;
     flex-direction: row;
-    background-color: white;
+    background-color: #a50a76;
     padding: 20px;
     /*border:5px solid black;*/
     border-radius: 10px;
@@ -17,3 +18,5 @@
     width: auto;
     height: min-content;
 }
+
+

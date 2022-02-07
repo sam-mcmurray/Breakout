@@ -2,8 +2,8 @@
   margin: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
-  width: 90%;
-  padding: 1rem;
+  color: #ffffff;
+  padding: 5%;
   overflow: hidden;
-  background: #797979;
+  background: #309c9c;
 }

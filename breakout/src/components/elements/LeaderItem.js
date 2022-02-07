@@ -5,12 +5,14 @@ import "./LeaderItem.css"
 
 function LeaderItem(props) {
   return (
-    <Card className="list-item__content">
-      <h1>{props.id}</h1>
-      <h1>{props.name}</h1>
-      <h1>{props.level}</h1>
-      <h1>{props.score}</h1>
-    </Card>
+    <li>
+      <Card className="leader-item__content">
+        <h1 className="h1">{props.name}</h1>
+        <h2>TOP LEVEL: {props.level}</h2>
+        <h3>TOP SCORE: {props.score}</h3>
+      </Card>
+    </li>
+
   );
 }
 

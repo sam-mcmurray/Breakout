@@ -1,0 +1,17 @@
+.leader_list {
+  padding: 0;
+  display: inline;
+  margin-right: 10px;
+  list-style: none;
+  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: auto;
+  align-self: center;
+}
+
+@media (max-width:600px){
+  .leader_list { 
+      grid-template-columns: repeat(1, 1fr); 
+    }
+}

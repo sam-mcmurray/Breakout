@@ -7,8 +7,9 @@ function Footer() {
     <footer className="footer">
       <p>
         © Samuel Mcmurray 2022
-        <address>Breakout Application HKR</address>
       </p>
+      <address>Breakout Application HKR</address>
+
     </footer>
   );
 }
