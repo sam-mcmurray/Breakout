@@ -5,7 +5,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <footer className="footer">
-      <p>
+      <p className="copyright">
         © Samuel Mcmurray 2022
       </p>
       <address>Breakout Application HKR</address>

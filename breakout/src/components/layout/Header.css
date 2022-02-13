@@ -15,6 +15,7 @@
     font-weight: normal;
     color: #309c9c;
     font-size: 39px;
+    padding-top: 5%;
     margin: 0 0 10px;
     flex-direction: row;
 }
@@ -27,19 +28,25 @@
     flex-direction: row;
     justify-content:flex-start;
     align-self: center;
+    align-items: center;
 }
 
 .link a {
     list-style: none;
     align-self: center;
+    align-items: center;
     color: white;
-    padding: 0 10px;
+    padding: 10px;
+    margin: 10px;
     text-decoration: none;
 }
 
 .link a:hover,
 .link a:active,
 .link a.active {
+    align-self: center;
+    align-items: center;
+    margin: 10px;
     padding: 10px;
     background: #309c9c;
     border-radius: 10px;

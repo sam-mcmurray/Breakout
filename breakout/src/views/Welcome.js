@@ -1,9 +1,11 @@
 import React from "react";
 
 import Card from "../components/elements/Card";
+
+import "./Welcome.css"
 function Welcome() {
   return (
-    <Card>
+    <Card className="welcome__content">
       <h1>Welcome To Breakout!</h1>
       <p>
         Breakout is an arcade video game developed and published by Atari, Inc.[7] and released on May 13, 1976.[2]

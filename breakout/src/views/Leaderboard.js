@@ -1,7 +1,8 @@
-import React, { Fragment } from "react";
+import React from "react";
 import LeaderList from "../components/elements/LeaderList";
 
 import "./Leaderboard.css";
+
 function Leaderboard() {
   const leadersList = [
     {
@@ -31,11 +32,11 @@ function Leaderboard() {
   ];
 
   return (
-    <Fragment>
+    <div className="content">
       <h1 className="title">High Scores</h1>
       <br></br>
       <LeaderList items={leadersList} />
-    </Fragment>
+    </div>
 
   );
 }

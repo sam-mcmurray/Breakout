@@ -1,3 +1,10 @@
+.content {
+  flex: fit-content;
+  text-align: center;
+  align-items: center;
+}
+
+
 .title {
   font-family: 'Sigmar One', sans-serif;
   align-self: center;
