@@ -1,25 +1,26 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, {useState} from "react";
+import NavLinks from "./NavLinks";
 
 import "./Header.css";
 
 function Header(props) {
+  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+
+  function openDrawerHandler() {
+    setDrawerIsOpen(true);
+  }
+
   return (
     <header className="header">
-      <ul className="ul">
-        <li>
-          <h1 className="logo">Breakout</h1>
-        </li>
-        <li className="link">
-          <NavLink to="/">Welcome</NavLink>
-        </li>
-        <li className="link">
-          <NavLink to="/breakout">Breakout</NavLink>
-        </li>
-        <li className="link">
-          <NavLink to="/leaderboard">Leaderboard</NavLink>
-        </li>
-      </ul>
+      <button className="main-navigation__menu-btn" onClick={openDrawerHandler}>
+      <span/>
+      <span/>
+      <span/>
+    </button>
+      <h1 className="logo">Breakout</h1>
+      <nav className="main-navigation__header-nav">
+        <NavLinks/>
+      </nav>
     </header>
   );
 }

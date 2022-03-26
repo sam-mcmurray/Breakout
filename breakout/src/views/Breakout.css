@@ -1,4 +1,11 @@
 .scene__container {
-    height: available;
+    display: inline-block;
+    position: relative;
+    border-radius: 10px;
     width: 100%;
+    padding-bottom: 100%;
+    vertical-align: middle;
+    height: auto;
+    overflow: hidden;
+    background-color: transparent;
 }

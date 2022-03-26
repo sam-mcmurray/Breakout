@@ -1,11 +1,39 @@
 .scene {
-    background: #3b3939;
+    display: inline-block;
+    position: relative;
     border-radius: 10px;
-    border: 2px solid black;
     width: 100%;
-    height: 100%;
+    padding-bottom: 100%;
+    vertical-align: middle;
+    height: auto;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.svg-content {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    max-height: inherit;
+    background-color: slategray;
+
+}
+
+.gameStats {
     display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-self: center;
     align-items: center;
     justify-content: center;
-    flex: 1 1 auto;
+    color: white;
+    flex-direction: row;
+}
+
+.gameStats h3{
+    align-self: center;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
