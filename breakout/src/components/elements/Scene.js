@@ -1,15 +1,14 @@
 import React, {Fragment, useEffect,  useState} from "react";
-
-import Ball from "./Ball";
-import {BLOCK_HEIGHT, BLOCK_WIDTH, BLOCKS_START_STATE, PADDLE_START_STATE} from "../../game/Level"
-import Block from "./Block";
-
-import "./Scene.css"
+import {BLOCK_HEIGHT, BLOCK_WIDTH, BLOCKS_START_STATE, NewBlocks, PADDLE_START_STATE} from "../../game/Level"
 import {registerListener} from "../../game/Util";
 
+import Ball from "./Ball";
+import Block from "./Block";
 import Score from "./Score";
 import Lives from "./Lives";
 import Paddle from "./Paddle";
+
+import "./Scene.css"
 
 const BALL_START_STATE = ( {
   x: 250,
@@ -19,7 +18,14 @@ const BALL_START_STATE = ( {
   dy: -6,
 });
 
-const UPDATE_EVERY = 1000 / 60
+const UPDATE_EVERY = 1000/10
+
+function moveBall(ball) {
+  return({...ball,
+    x: ball.x + ball.dx,
+    y: ball.y + ball.dy
+})
+}
 
 function movePaddleLeft(paddle) {
   if (paddle.x === 0) {
@@ -35,14 +41,49 @@ function movePaddleRight(paddle) {
   return ({...paddle, x: paddle.x + paddle.dx})
 }
 
-function moveBall(ball) {
-  console.log("moveball")
-  return({...ball,
-    x: ball.x + ball.dx,
-    y: ball.y + ball.dy
-})
-}
+function ballBlockCollision(ball, block) {
+  let distX = Math.abs(ball.x - block.x - BLOCK_WIDTH / 2);
+  let distY = Math.abs(ball.y - block.y - BLOCK_HEIGHT / 2);
 
+  console.log(distX)
+
+  if (distX > BLOCK_WIDTH / 2 + ball.radius) {
+    // return false;
+    return {
+      hit: false,
+    };
+  }
+  if (distY > BLOCK_HEIGHT / 2 + ball.radius) {
+    // return false;
+    return {
+      hit: false,
+    };
+  }
+
+  if (distX <= BLOCK_WIDTH / 2) {
+    // return true;
+    return {
+      hit: true,
+      axis: "y",
+    };
+  }
+  if (distY <= BLOCK_HEIGHT / 2) {
+    // return true;
+    return {
+      hit: true,
+      axis: "x",
+    };
+  }
+
+  // also test for corner collisions
+  let dx = distX - block.width / 2;
+  let dy = distY - block.height / 2;
+  // return dx * dx + dy * dy <= circle.rad * circle.rad;
+  return {
+    hit: dx * dx + dy * dy <= ball.radius * ball.radius,
+    axis: "x",
+  };
+}
 
 
 function Scene() {
@@ -52,30 +93,46 @@ function Scene() {
   const [score, setScore] = useState(0);
   const [blocksState, setBlocksState] = useState(BLOCKS_START_STATE);
   const [tick, setTick] = useState(1);
-  const [leftArrow, setLeftArrow] = useState(false);
-  const [rightArrow, setRightArrow] = useState(false);
 
+
+  function handleBlocks(blockState, ballState) {
+    for (let i = 0; i < blockState.length; i++) {
+      let block = blockState[i];
+      const {hit, axis} = ballBlockCollision(ballState, block);
+      if (hit) {
+        if (block.density === 1) {
+          setScore((prevScore) => prevScore + 4)
+        } else if (block.density === 2) {
+          setScore((prevScore) => prevScore + 8)
+        } else if (block.density === 3) {
+          setScore((prevScore) => prevScore + 12)
+        }
+
+        let newDensity = block.density - 1;
+        return (blockState.map(e => e === block ? {x: block.x, y: block.y, density: newDensity, key: block.key} : e));
+      }
+    }
+    return (blockState);
+  }
+  
   function onKeyDown(event) {
     if (event.key === "ArrowRight") {
-      setRightArrow(true)
-      console.log(rightArrow)
+
     } else if (event.key === "ArrowLeft") {
-      setLeftArrow(true)
-      console.log(leftArrow)
+
     }
     console.log(event.key)
   }
 
   function onKeyUp(event) {
     if (event.key === "arrowRight" || event.key === 'd') {
-      setRightArrow(false);
-      console.log(rightArrow)
-    } else if (event.key === "arrowLeft" || event.key === 'a') {
-      setLeftArrow(false)
-      console.log(leftArrow)
-    }
-  }
 
+
+    } else if (event.key === "arrowLeft" || event.key === 'a') {
+
+    }
+    console.log(event.key)
+  }
 
   function ballWallCollision(ball) {
     if (((ball.x + ball.radius) > 500) || ((ball.x - ball.radius) < 0)) {
@@ -99,50 +156,6 @@ function Scene() {
     return ({...ball})
   }
 
-  function ballBlockCollision(ball, block) {
-    let distX = Math.abs(ball.x - block.x - BLOCK_WIDTH / 2);
-    let distY = Math.abs(ball.y - block.y - BLOCK_HEIGHT / 2);
-
-    console.log(distX)
-
-    if (distX > BLOCK_WIDTH / 2 + ball.radius) {
-      // return false;
-      return {
-        hit: false,
-      };
-    }
-    if (distY > BLOCK_HEIGHT / 2 + ball.radius) {
-      // return false;
-      return {
-        hit: false,
-      };
-    }
-
-    if (distX <= BLOCK_WIDTH / 2) {
-      // return true;
-      return {
-        hit: true,
-        axis: "y",
-      };
-    }
-    if (distY <= BLOCK_HEIGHT / 2) {
-      // return true;
-      return {
-        hit: true,
-        axis: "x",
-      };
-    }
-
-    // also test for corner collisions
-    let dx = distX - block.width / 2;
-    let dy = distY - block.height / 2;
-    // return dx * dx + dy * dy <= circle.rad * circle.rad;
-    return {
-      hit: dx * dx + dy * dy <= ball.radius * ball.radius,
-      axis: "x",
-    };
-  }
-
   function ballPaddleCollision(ball) {
     if (ball.y > paddleState.y && ball.y < paddleState.y + paddleState.height
       && ball.x > paddleState.x && ball.x < paddleState.x + paddleState.width) {
@@ -155,74 +168,42 @@ function Scene() {
         dy: - 6 * Math.cos(angle)
       })
     }
-    return (ball)
+    return ({...ball})
   }
 
-
-
-
   useEffect(() => {
-    let newBallState = ballState;
-    setBlocksState((blockState) => {
-      console.log(blockState)
-      let newBlocks = [{x: blockState[0].x, y: blockState[0].y, density: blockState[0].density}];
-      for (let i = 0; i < blockState.length; i++) {
-        let block = blockState[i];
+    setBallState((prevState) => {
+      for (let i = 0; i < blocksState.length; i++) {
+        let block = blocksState[i];
         const {hit, axis} = ballBlockCollision(ballState, block);
         if (hit) {
-          if (i === 0) {
-            newBlocks[i].density = block.density - 1;
-          }
-          let newDensity = block.density - 1;
-          console.log(hit)
-          newBlocks.push({x: block.x, y: block.y, density: newDensity});
-          console.log(block)
-          console.log(blockState[i])
-          console.log(newBlocks)
-
           if (axis === "x") {
-            newBallState = ({x: ballState.x,
-              y: ballState.y,
-              radius: ballState.radius,
-              dx: -ballState.dx,
-              dy: ballState.dy,
-            });
+            let dx = -prevState.dx
+            prevState = {
+              ...prevState,
+              dx: dx,
+            };
+          } else if (axis === "y") {
+            let dy = -prevState.dy
+            prevState = {
+              ...prevState,
+              dy: dy,
+            };
           }
-          if (axis === "y") {
-            newBallState = ({x: ballState.x,
-              y: ballState.y,
-              radius: ballState.radius,
-              dx: ballState.dx,
-              dy: -ballState.dy,
-            });
-          }
-
-          console.log(blockState)
-        } else if (i !== 0 ) {
-          newBlocks.push(block)
         }
       }
-      console.log(newBlocks);
-      return (newBlocks);
-    })
-
-    setBallState((prevState) => {
-      return(newBallState);
-    })
-
-    setBallState((prevState) => {
-      return(moveBall(prevState));
+      prevState = ballWallCollision(prevState)
+      prevState = ballPaddleCollision(prevState)
+      return(moveBall(prevState))
     });
+    setBlocksState((prevState) =>
+      handleBlocks(prevState, ballState)
+    );
 
-    console.log(ballState)
     setBallState((prevState) => {
       return(ballPaddleCollision(prevState));
     })
-    setBallState((prevState) => {
-      return(ballWallCollision(prevState));
-    })
 
-    console.log(ballState)
     const timerId = setInterval(() => {
       setTick(tick + 1)
     }, UPDATE_EVERY)

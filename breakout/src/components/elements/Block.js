@@ -18,10 +18,12 @@ function Block(state) {
     return null;
   }
 
+
   return (
     <rect
       className='block'
       fill={color}
+      key={state.key}
       x={state.x}
       y={state.y}
       stroke="#333333"

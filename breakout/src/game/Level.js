@@ -23,10 +23,12 @@ export const BLOCKS_START_STATE = () => {
   let redCount = 19;
   let blueCount = 20;
   let yellowCount = 20;
+  let key = 0;
   let blocks = [{
     density: 3,
     x: 0,
-    y: 50
+    y: 50,
+    key: 0,
   },]
   let y = 50;
   for (let i = 0; i < ROWS; i++) {
@@ -45,10 +47,12 @@ export const BLOCKS_START_STATE = () => {
       } else if (yellowCount > 0) {
         density = YELLOW_BLOCK_DENSITY
       }
+      key++;
       blocks.push({
         density,
         x,
-        y
+        y,
+        key,
       });
       console.log(blocks)
 
@@ -58,4 +62,20 @@ export const BLOCKS_START_STATE = () => {
   }
   console.log(blocks);
   return blocks;
+}
+
+export const NewBlocks = (blocks, k) => {
+  console.log(blocks)
+  let newBlocks = [];
+  for (let i = 0; i < blocks.length; i++) {
+      let block = blocks[i];
+      console.log(block)
+      if (block.key !== k) {
+        newBlocks.push(block);
+        continue;
+      }
+      newBlocks.push({density: block.density--, x: block.x, y: block.y, key: block.key})
+
+    }
+    return(newBlocks)
 }
