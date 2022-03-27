@@ -3,8 +3,10 @@ export const registerListener = (eventName, handler) => {
   return () => window.removeEventListener(eventName, handler);
 }
 
-export async function getLeaderboard() {
-  return (await (await fetch('http://localhost:5600/api/leaderboard')).json());
+export function getStorage(key) {
+  return JSON.parse(window.sessionStorage.getItem(key));
 }
 
-
+export function setStorage(key, value) {
+  window.sessionStorage.setItem(key, JSON.stringify(value));
+}

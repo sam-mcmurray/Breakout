@@ -63,3 +63,12 @@ export const BLOCKS_START_STATE = () => {
   console.log(blocks);
   return blocks;
 }
+
+export function checkAllBlocks(blocks) {
+  for (let block in blocks) {
+    if (block.density > 0) {
+      return false;
+    }
+  }
+  return false
+}

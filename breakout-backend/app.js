@@ -6,11 +6,16 @@ const cors = require('cors')
 
 const app = express()
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+const allowedOrigins = ["http://localhost:3000"];
+const methods = ["GET", "PUT", "POST", "PATCH", "UPDATE", "HEAD", "OPTIONS", "DELETE"]
+const headers = ["Origin", "X-Requested-With", "Content-Type", "Accept"]
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: methods,
+  headers: headers
+}));
+
 app.use(express.json());
 const PORT = 5600
 

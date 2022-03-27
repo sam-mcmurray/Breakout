@@ -1,20 +1,36 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import LeaderItem from "./LeaderItem";
 
 import "./LeaderList.css";
-import {getLeaderboard} from "../../game/Util";
 
 function LeaderList(props) {
-  let leadersList = getLeaderboard()
-  console.log(leadersList)
+  const [listState, setListState] = useState([]);
+
+    useEffect(() => {
+      const fetchLeaderboard = async () => {
+        let rawData = await fetch('http://localhost:5600/api/leaderboard')
+        const leaderList = await (rawData.json());
+        setListState(leaderList);
+      };
+      fetchLeaderboard();
+    }, []);
+
+
+
+  if (listState === []) {
+    return (
+      <div>
+        <h1>NO SCORES YET</h1>
+      </div>
+    )
+  }
 
   return (
     <ul className="leader_list">
-      {leadersList.map((hiScore) => (
+      {listState.map((hiScore) => (
         <LeaderItem className="leader_list"
           key={hiScore.leaderboardId}
           id={hiScore.leaderboardId}
-          rank={hiScore.leaderboardId}
           name={hiScore.username}
           level={hiScore.level}
           score={hiScore.score}

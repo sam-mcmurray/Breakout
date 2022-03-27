@@ -2,7 +2,7 @@ import React, {Fragment, useEffect,  useState} from "react";
 import {
   BLOCK_HEIGHT,
   BLOCK_WIDTH,
-  BLOCKS_START_STATE,
+  BLOCKS_START_STATE, checkAllBlocks,
   NewBlocks,
   PADDLE_START_STATE,
   PADDLE_WIDTH
@@ -26,6 +26,26 @@ const BALL_START_STATE = ( {
 });
 
 const UPDATE_EVERY = 1000/60
+
+async function handleLeaderboard(username, level, score) {
+  let data = {
+    username,
+    level,
+    score
+  }
+  const response = await fetch('http://127.0.0.1:5600/api/leaderboard', {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+
+  console.log(response)
+}
 
 function moveBall(ball) {
   return({...ball,
@@ -125,9 +145,9 @@ function Scene() {
 
 
   function onKeyDown(event) {
-    if (event.key === "arrowRight" || event.key === "d") {
+    if (event.key === "ArrowRight" || event.key === "d") {
       setMovement("right")
-    } else if (event.key === "arrowLeft" || event.key === "a") {
+    } else if (event.key === "ArrowLeft" || event.key === "a") {
       setMovement("left")
     }
     console.log(event.key)
@@ -194,7 +214,12 @@ function Scene() {
   }
 
   useEffect(() => {
-
+    if (checkAllBlocks(blocksState)) {
+      let username = window.sessionStorage.getItem("user")
+      window.alert("Congratulations, You have won " + username + "!");
+      handleLeaderboard(username,1 ,score)
+      setNewGame(true);
+    }
 
     setBallState((prevState) => {
       for (let i = 0; i < blocksState.length; i++) {

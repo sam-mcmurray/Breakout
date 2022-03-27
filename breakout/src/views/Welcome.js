@@ -3,7 +3,9 @@ import React from "react";
 import Card from "../components/elements/Card";
 
 import "./Welcome.css"
+
 function Welcome() {
+
   return (
     <Card className="welcome__content">
       <h1>Welcome To Breakout!</h1>
@@ -31,9 +33,11 @@ function Welcome() {
         The highest score achievable for one player is 896; this is done by eliminating two screens of bricks worth 448
         points per screen. Once the second screen of bricks is destroyed, the ball in play harmlessly bounces off empty
         walls until the player restarts the game, as no additional screens are provided. However, a secret way to score
-        beyond the 896 maximum is to play the game in two-player mode. If "Player One" completes the first screen on their
+        beyond the 896 maximum is to play the game in two-player mode. If "Player One" completes the first screen on
+        their
         third and last ball, then immediately and deliberately allows the ball to "drain", Player One's second screen is
-        transferred to "Player Two" as a third screen, allowing Player Two to score a maximum of 1,344 points if they are
+        transferred to "Player Two" as a third screen, allowing Player Two to score a maximum of 1,344 points if they
+        are
         adept enough to keep the third ball in play that long. Once the third screen is eliminated, the game is over.
       </p>
     </Card>

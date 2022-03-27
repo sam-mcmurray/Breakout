@@ -2,11 +2,12 @@ import React, {useRef} from "react";
 import Card from "./Card";
 
 import "./RegisterName.css"
+import {setStorage} from "../../game/Util";
 
 function RegisterName(props) {
   const nameRef = useRef();
   function enterName() {
-    window.sessionStorage.setItem("user", JSON.stringify(nameRef.current.value));
+    setStorage("user", nameRef.current.value);
   }
 
   return (
