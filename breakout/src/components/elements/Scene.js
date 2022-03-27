@@ -1,5 +1,12 @@
 import React, {Fragment, useEffect,  useState} from "react";
-import {BLOCK_HEIGHT, BLOCK_WIDTH, BLOCKS_START_STATE, NewBlocks, PADDLE_START_STATE} from "../../game/Level"
+import {
+  BLOCK_HEIGHT,
+  BLOCK_WIDTH,
+  BLOCKS_START_STATE,
+  NewBlocks,
+  PADDLE_START_STATE,
+  PADDLE_WIDTH
+} from "../../game/Level"
 import {registerListener} from "../../game/Util";
 
 import Ball from "./Ball";
@@ -12,13 +19,13 @@ import "./Scene.css"
 
 const BALL_START_STATE = ( {
   x: 250,
-  y: 450,
+  y: 430,
   radius: 20,
   dx: 6 * (Math.random() * 2 - 1),
   dy: -6,
 });
 
-const UPDATE_EVERY = 1000/10
+const UPDATE_EVERY = 1000/60
 
 function moveBall(ball) {
   return({...ball,
@@ -35,7 +42,7 @@ function movePaddleLeft(paddle) {
 }
 
 function movePaddleRight(paddle) {
-  if (paddle.x === 500) {
+  if (paddle.x + PADDLE_WIDTH === 500) {
     return (paddle);
   }
   return ({...paddle, x: paddle.x + paddle.dx})
@@ -93,6 +100,7 @@ function Scene() {
   const [score, setScore] = useState(0);
   const [blocksState, setBlocksState] = useState(BLOCKS_START_STATE);
   const [tick, setTick] = useState(1);
+  const [movement, setMovement] = useState("none");
 
 
   function handleBlocks(blockState, ballState) {
@@ -114,25 +122,37 @@ function Scene() {
     }
     return (blockState);
   }
-  
+
+
+
   function onKeyDown(event) {
-    if (event.key === "ArrowRight") {
-
-    } else if (event.key === "ArrowLeft") {
-
+    if (event.key === "arrowRight" || event.key === "d") {
+      setMovement("right")
+    } else if (event.key === "arrowLeft" || event.key === "a") {
+      setMovement("left")
     }
     console.log(event.key)
   }
 
   function onKeyUp(event) {
-    if (event.key === "arrowRight" || event.key === 'd') {
-
-
-    } else if (event.key === "arrowLeft" || event.key === 'a') {
-
-    }
+    setMovement("none")
     console.log(event.key)
   }
+
+  useEffect(() => {
+    const unregisterKeydown = registerListener('keydown', onKeyDown)
+    const unregisterKeyup = registerListener('keyup', onKeyUp)
+
+    if (movement === "right") {
+      setPaddleState((prevState) => movePaddleRight(prevState));
+    } else if (movement === "left") {
+      setPaddleState((prevState) => movePaddleLeft(prevState));
+    }
+    return () => {
+      unregisterKeydown()
+      unregisterKeyup()
+    }
+  }, [onKeyUp, onKeyDown])
 
   function ballWallCollision(ball) {
     if (((ball.x + ball.radius) > 500) || ((ball.x - ball.radius) < 0)) {
@@ -172,9 +192,14 @@ function Scene() {
   }
 
   useEffect(() => {
+
+
     setBallState((prevState) => {
       for (let i = 0; i < blocksState.length; i++) {
         let block = blocksState[i];
+        if (block.density <= 0) {
+          continue;
+        }
         const {hit, axis} = ballBlockCollision(ballState, block);
         if (hit) {
           if (axis === "x") {
@@ -207,12 +232,11 @@ function Scene() {
     const timerId = setInterval(() => {
       setTick(tick + 1)
     }, UPDATE_EVERY)
-    const unregisterKeydown = registerListener('keydown', onKeyDown)
-    const unregisterKeyup = registerListener('keyup', onKeyUp)
+
     return () => {
       clearInterval(timerId)
-      unregisterKeydown()
-      unregisterKeyup()
+      // unregisterKeydown()
+      // unregisterKeyup()
     }
 
   }, [tick])

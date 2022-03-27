@@ -15,7 +15,7 @@ export const PADDLE_WIDTH = SCENE_SIZE / 4
 export const PADDLE_Y = 450;
 
 export const PADDLE_START_STATE = {
-  x: 250, dx:4, y:PADDLE_Y, width: PADDLE_WIDTH, height: BLOCK_HEIGHT
+  x: 250, dx:0.25, y:PADDLE_Y, width: PADDLE_WIDTH, height: BLOCK_HEIGHT
 };
 
 
@@ -62,20 +62,4 @@ export const BLOCKS_START_STATE = () => {
   }
   console.log(blocks);
   return blocks;
-}
-
-export const NewBlocks = (blocks, k) => {
-  console.log(blocks)
-  let newBlocks = [];
-  for (let i = 0; i < blocks.length; i++) {
-      let block = blocks[i];
-      console.log(block)
-      if (block.key !== k) {
-        newBlocks.push(block);
-        continue;
-      }
-      newBlocks.push({density: block.density--, x: block.x, y: block.y, key: block.key})
-
-    }
-    return(newBlocks)
 }
