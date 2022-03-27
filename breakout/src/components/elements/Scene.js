@@ -52,8 +52,6 @@ function ballBlockCollision(ball, block) {
   let distX = Math.abs(ball.x - block.x - BLOCK_WIDTH / 2);
   let distY = Math.abs(ball.y - block.y - BLOCK_HEIGHT / 2);
 
-  console.log(distX)
-
   if (distX > BLOCK_WIDTH / 2 + ball.radius) {
     // return false;
     return {
@@ -100,7 +98,8 @@ function Scene() {
   const [score, setScore] = useState(0);
   const [blocksState, setBlocksState] = useState(BLOCKS_START_STATE);
   const [tick, setTick] = useState(1);
-  const [movement, setMovement] = useState("none");
+  const [movement, setMovement] = useState("none")
+  const [newGame, setNewGame] = useState(false);
 
 
   function handleBlocks(blockState, ballState) {
@@ -165,6 +164,9 @@ function Scene() {
 
     if ((ball.y + ball.radius) > 520) {
       setLives(lives - 1);
+      if (lives - 1 < 0) {
+        setNewGame(true);
+      }
         return ({
           x: 250,
           y: 450 + 20,
@@ -173,7 +175,7 @@ function Scene() {
           dy: -6,
         });
     }
-    return ({...ball})
+    return ({...ball});
   }
 
   function ballPaddleCollision(ball) {
@@ -229,6 +231,14 @@ function Scene() {
       return(ballPaddleCollision(prevState));
     })
 
+    if (newGame) {
+      setBlocksState(BLOCKS_START_STATE)
+      setBallState(BALL_START_STATE)
+      setLives(3)
+      setScore(0)
+      setNewGame(false)
+    }
+
     const timerId = setInterval(() => {
       setTick(tick + 1)
     }, UPDATE_EVERY)
@@ -239,7 +249,7 @@ function Scene() {
       // unregisterKeyup()
     }
 
-  }, [tick])
+  }, [tick, newGame])
 
   return (
     <Fragment>

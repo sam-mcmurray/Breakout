@@ -2,24 +2,20 @@ import React from "react";
 import LeaderItem from "./LeaderItem";
 
 import "./LeaderList.css";
+import {getLeaderboard} from "../../game/Util";
 
 function LeaderList(props) {
-  if (props.items.length === 0) {
-    return (
-      <div>
-
-      </div>
-    );
-  }
+  let leadersList = getLeaderboard()
+  console.log(leadersList)
 
   return (
     <ul className="leader_list">
-      {props.items.map((hiScore) => (
+      {leadersList.map((hiScore) => (
         <LeaderItem className="leader_list"
-          key={hiScore.rank}
-          id={hiScore.id}
-          rank={hiScore.rank}
-          name={hiScore.name}
+          key={hiScore.leaderboardId}
+          id={hiScore.leaderboardId}
+          rank={hiScore.leaderboardId}
+          name={hiScore.username}
           level={hiScore.level}
           score={hiScore.score}
         />
